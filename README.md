@@ -54,17 +54,16 @@ implementerete. Inoltre, in questa esercitazione vi sara' la possibilita' di vis
 OpenCV (Open Source Computer Vision Library) [OpenCV Homepage](https://opencv.org/) è una libreria di elaborazione delle immagini e della visione artificiale open-source. È scritta in C++, ma esiste anche una versione Python chiamata cv2. Questo potente strumento è utilizzato in una vasta gamma di applicazioni inerenti la computer vision, tuttavia noi la utilizzeremo solo parzialmente. Infatti la useremo solamente per costruire una GUI personalizzata e interattiva, mediante la quale possiamo cambiare manualmente i parametri di nostro interesse, andando verificare i cambiamenti delle immagini in tempo reale.
 
 ### 0.1 Installazione ###
-## Repository ufficiale
-Nella macchina virtuale BIAR 4.3 la versione di opencv disponibile è la 3.2. 
-Per installarla da terminale dovete eseguire questi comandi:
+#### Repository ufficiale
+In Ubuntu di solito è suffeciente installare la versione standard via apt:
 
     sudo apt update
     sudo apt install libopencv-dev libopencv-core3.2
     
-ovviemente utilizzando la password della macchina virtuale quando vi viene richiesta. Per altri sistemi linux, il procedimento è analogo.
+nel caso di altri sistemi operativi, consultate la [pagina di installazione](https://docs.opencv.org/4.x/d0/d3d/tutorial_general_install.html)
 
-## Source
-Per l'installazione faccio riferimento alla pagina ufficiale di OpenCV dove troverete oltre alle istruzioni di installazione, una collezione molto ampia di tutorial che vi spiega nel dettaglio come utilizzare questo strumento. [OpenCV Tutorials](https://docs.opencv.org/3.4/df/d65/tutorial_table_of_content_introduction.html).
+#### Source
+Per l'installazione da sorgente faccio riferimento alla pagina ufficiale di OpenCV dove troverete oltre alle istruzioni di installazione, una collezione molto ampia di tutorial che vi spiega nel dettaglio come utilizzare questo strumento. [OpenCV Tutorials](https://docs.opencv.org/3.4/df/d65/tutorial_table_of_content_introduction.html).
 
 Prima di tutto installate i componenti fondamentali (necessitate solo di quelli con la flag compiler e required, degli optional potete farne a meno).
 
@@ -142,10 +141,10 @@ In questo modo, invece di usare un filtro NxN bidimensionale, ne userete due
 Completate `Image make_1d_gaussian(float sigma)` e 
 `Image smooth_image(const Image& im, float sigma)` .
 
-## 1.2 Calcolare i candidati (cornerness function) a partire dealla matrice S ##
+## 1.2 Calcolare i candidati (cornerness function) a partire dalla matrice S ##
 
 Completate la funzione `Image cornerness_response(const Image& S, int method)`. 
-Ritornate `det(S)/tr(S)` per ciascun pixel. A lezone abbiamo visto funzioni 
+Ritornate `det(S)/tr(S)` per ciascun pixel. Nelle lezioni abbiamo visto funzioni 
 di _cornerness_ basate `R = min(s_1, s_2)` e `R = det(S) - tr(S)^2`. Quella 
 che usiamo qui è una nuova variante, `R = det(S)/tr(S)`. La 
 funzione si aspetta un parametro `method`. A seconda se valga 0, 1 o 2 
@@ -163,18 +162,7 @@ attorno a ciascun pixel. Se uno qualunque dei pixel nella finestra ha
 intensità maggiore di quello centrale, impostate quest'ultimo ad un numero 
 negativo molto basso e passate al successivo.
 
-## 1.4 Completate l'Harris detector ##
-
-> NB: la funzione che vogliamo implementare utilizza due elementi del C++ che 
-non è detto che conosciate: la struttura adati `vector` che fa parte della 
-Standard Template Library del C++ e i Template. La prima è semplicemente una 
-struttura dati dinamica che gestisce da sola la memoria. In pratica è come 
-una `list` di python, per semplificare molto la questione. I Template invece 
-sono uno strumento del linguaggio C++ per gestire tipi diversi e arbitrari. 
-In questo caso noi vogliamo un array di *descrittori*, e questo si indica in 
-C++ così: `vector<Descriptor>`. Chiaramente `Descriptor` deve essere un tipo 
-di dato valido nel contesto del progetto, cioè deve esistere una class o una 
-struct che lo definisce. 
+## 1.4 Completate l'Harris detector #
 
 Completate le parti mancanti di `vector<Descriptor> detect_corners(const Image& im, const Image& nms, float thresh, int window)`.
 La funzione dovrebbe ritornare un vector di descrittori dei corner 
