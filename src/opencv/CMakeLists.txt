@@ -1,0 +1,31 @@
+find_package( OpenCV QUIET )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/interactive_visualization)
+
+if(OpenCV_FOUND)
+  message(---------------------------------------------)
+  message("OpenCV found!!!!")
+  message("Building WITH Visualization")
+  message(---------------------------------------------)
+
+  add_executable(harris test_harris.cpp opencv_utils.cpp opencv_utils.h)
+  add_executable(matches test_matches.cpp opencv_utils.cpp opencv_utils.h)
+  add_executable(inliers test_inliers.cpp opencv_utils.cpp opencv_utils.h)
+  add_executable(panorama test_panorama.cpp opencv_utils.cpp opencv_utils.h)
+
+  target_link_libraries( harris ${OpenCV_LIBS} )
+  target_link_libraries( matches ${OpenCV_LIBS} )
+  target_link_libraries( inliers ${OpenCV_LIBS} )
+  target_link_libraries( panorama ${OpenCV_LIBS} )
+
+  set_target_properties(harris PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/interactive_visualization)
+  set_target_properties(matches PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/interactive_visualization)
+  set_target_properties(inliers PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/interactive_visualization)
+  set_target_properties(panorama PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/interactive_visualization)
+
+else()
+  message(---------------------------------------------)
+  message("OpenCV NOT found")
+  message("Building WITHOUT Visualization")
+  message(---------------------------------------------)
+endif()
